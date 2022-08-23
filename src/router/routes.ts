@@ -16,6 +16,11 @@ export const routes = [
         path: "/favorite",
         component: () => import("@/pages/ghub/Favorite.vue"),
       },
+      {
+        name: "Detail",
+        path: "/search/detail",
+        component: () => import("@/pages/ghub/detail-page/index.vue"),
+      },
     ],
   },
 ];

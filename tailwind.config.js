@@ -123,7 +123,8 @@ module.exports = {
     fontFamily: {
       "khmer-main": "Nato-Khmer-Regular, sans-serif",
       "khmer-bold": "Nato-Khmer-Bold, sans-serif",
-      "jost" : 'Jost',
+      "jost": 'Jost',
+      "arsenal": 'Arsenal'
     },
     extend: {},
   },
