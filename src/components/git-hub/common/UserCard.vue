@@ -1,5 +1,5 @@
 <template>
-  <div class="card-container p-2">
+  <div class="card-container p-2 relative">
     <div class="row justify-between">
       <div class="col-10 row" @click="goToDetailPage()">
         <div class="image col-4 w-1/3 my-auto rounded-lg">
@@ -8,14 +8,14 @@
             'https://bitsofco.de/content/images/2018/12/broken-1.png'
           " alt="" class="rounded-lg" />
         </div>
-        <div class="user-info col-6 ml-3 py-2 font-jost overflow-hidden">
-          <span class="mb-2 whitespace-nowrap"><span class="font-bold">{{ route.query.name }}</span>{{ userNameDisplay
+        <div class="user-info col-6 ml-3 py-2 font-jost overflow-hidden whitespace-nowrap">
+          <span class="mb-2"><span class="font-bold text-red">{{ route.query.name }}</span>{{ userNameDisplay
           }}</span>
-          <span class="text-xs">{{ follower || 'Loading ...' }}</span>
+          <span class="text-xs ">{{ follower || 'Loading ...' }}</span>
           <span class="text-xs">{{ following || 'Loading ...' }}</span>
         </div>
       </div>
-      <div class="p-2 flex flex-col">
+      <div class="py-2 flex flex-col absolute right-2">
         <span v-if="isFavorite" class="material-icons text-red text-sm" @click="onUnSetFavorite()"> favorite </span>
         <span v-else class="material-icons text-red text-sm" @click="onSetFavorite()"> favorite_border </span>
       </div>
@@ -69,6 +69,12 @@ const onUnSetFavorite = () => {
 const goToDetailPage = () => {
   emit('goToDetail', props.user)
 }
+</script>
+<script lang="ts">
+import { defineComponent } from "vue";
+export default defineComponent({
+  name:'UserCard'
+})
 </script>
 
 <style scoped lang="scss">

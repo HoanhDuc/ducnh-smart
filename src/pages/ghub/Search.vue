@@ -1,43 +1,61 @@
 <template>
   <div>
     <Loading v-if="isLoading" />
-    <div class="flex items-center justify-between mb-5">
+    <div class="flex items-center justify-between mb-2">
       <p class="text-3xl font-bold font-jost">Search</p>
     </div>
-    <q-input outlined v-model="searchValue" placeholder="Enter GitHub username, i.e. gaearon" type="search"
-      @keyup="getListUser" class="mb-2" />
+    <q-input
+      outlined
+      v-model="searchValue"
+      placeholder="Enter GitHub username, i.e. gaearon"
+      type="search"
+      @keyup="getListUser"
+      class="mb-2"
+    />
     <div class="search-item">
       <p class="text-sm font-jost">{{ totalSearch }} GitHub users found</p>
-      <Empty v-if="!listUsers.length && !isLoading" class="mx-auto mt-32 w-3/5" />
-      <div class="row justify-between">
+      <GitHubNotify v-if="!searchValue && !isLoading" class="mx-auto mt-32" />
+      <div class="row justify-between min-w-">
         <div v-for="(user, index) in listUsers" :key="index" class="col-6 mb-2">
-          <user-card :user="user" @set-favorite="onSetFavorite" @un-set-favorite="onUnSetFavorite"
-            :is-favorite="checkFavorite(user)" @go-to-detail="goToDetail" :isLoading.sync="isLoading" />
+          <user-card
+            :user="user"
+            @set-favorite="onSetFavorite"
+            @un-set-favorite="onUnSetFavorite"
+            :is-favorite="checkFavorite(user)"
+            @go-to-detail="goToDetail"
+          />
         </div>
       </div>
     </div>
     <div class="text-center">
       <div class="q-pa-lg flex flex-center">
-        <q-pagination v-if="listUsers.length > 0" v-model="currentPage" color="black"
-          :max="totalPage > 100 ? 80 : totalPage" :max-pages="5" :boundary-numbers="false"
-          @update:model-value="onChangePage" />
+        <q-pagination
+          v-if="totalPage > 1"
+          v-model="currentPage"
+          color="black"
+          direction-links
+          :max="totalPage > 100 ? 80 : totalPage"
+          :max-pages="5"
+          :boundary-numbers="false"
+          @update:model-value="onChangePage"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import UserCard from "@/components/git-hub/search/UserCard.vue";
+import UserCard from "@/components/git-hub/common/UserCard.vue";
 import Loading from "@/components/common/Loading.vue";
 import useFetchList from "@/api/user";
 import { useDebounceFn } from "@vueuse/core";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { IItemUser } from "@api/user";
 import { useRoute, useRouter } from "vue-router";
 import useStoreGitHub from "@/store/git-hub";
-import Empty from "../../components/common/Empty.vue";
+import GitHubNotify from "../../components/common/GitHubNotify.vue";
 
-const storeGHub = useStoreGitHub()
+const storeGHub = useStoreGitHub();
 const isLoading = ref(false);
 const searchValue = ref(storeGHub.getSearchValue);
 const favoriteList = ref<IItemUser[]>([]);
@@ -50,19 +68,27 @@ const route = useRoute();
 const totalPage = ref(0);
 
 onMounted(() => {
-  const favoriteItems = window.localStorage.getItem('favorite')
+  const favoriteItems = window.localStorage.getItem("favorite");
   if (favoriteItems) {
-    favoriteList.value = JSON.parse(favoriteItems)
-    storeGHub.setFavoriteList(favoriteList.value)
+    favoriteList.value = JSON.parse(favoriteItems);
+    storeGHub.setFavoriteList(favoriteList.value);
   }
   if (searchValue.value) {
     fetchList(storeGHub.getSearchValue, 1);
     updatePage();
   }
-})
+});
+watch(searchValue, (value: string) => {
+  if (!value) {
+    listUsers.value = [];
+    totalSearch.value = 0;
+    totalPage.value = 0;
+    storeGHub.setSearchValue(searchValue.value);
+  }
+});
 const checkFavorite = (user: IItemUser) => {
-  return Boolean(favoriteList.value.find((item) => item.login === user.login))
-}
+  return Boolean(favoriteList.value.find((item) => item.login === user.login));
+};
 const fetchList = async (q: string, page: number) => {
   isLoading.value = true;
   listUsers.value = [];
@@ -74,13 +100,14 @@ const fetchList = async (q: string, page: number) => {
   } catch (err: any) {
     isLoading.value = false;
     totalSearch.value = 0;
+    listUsers.value = [];
   }
 };
 const getListUser = useDebounceFn(async () => {
   if (searchValue.value) {
     fetchList(searchValue.value, 1);
     updatePage();
-    storeGHub.setSearchValue(searchValue.value)
+    storeGHub.setSearchValue(searchValue.value);
   }
 }, 1000);
 const onChangePage = (page: string): void => {
@@ -93,18 +120,19 @@ const updatePage = async () => {
   totalSearch.value = data?.totalItems;
 };
 const onSetFavorite = (user: IItemUser) => {
-  favoriteList.value.push(user)
-  window.localStorage.setItem("favorite", JSON.stringify(favoriteList.value))
-  storeGHub.setFavoriteList(favoriteList.value)
-}
+  favoriteList.value.push(user);
+  window.localStorage.setItem("favorite", JSON.stringify(favoriteList.value));
+  storeGHub.setFavoriteList(favoriteList.value);
+};
 const onUnSetFavorite = (user: IItemUser) => {
-  favoriteList.value = favoriteList.value.filter(item => item.login !== user.login)
-  window.localStorage.setItem("favorite", JSON.stringify(favoriteList.value))
-  storeGHub.setFavoriteList(favoriteList.value)
-}
+  favoriteList.value = favoriteList.value.filter(
+    (item) => item.login !== user.login
+  );
+  window.localStorage.setItem("favorite", JSON.stringify(favoriteList.value));
+  storeGHub.setFavoriteList(favoriteList.value);
+};
 const goToDetail = (user: IItemUser) => {
-  storeGHub.setUserDetail(user)
-  router.push(`/search/detail?name=${user.login}`)
+  router.push(`/search/detail?name=${user.login}`);
 };
 </script>
 <style scoped lang="scss">
@@ -115,20 +143,24 @@ const goToDetail = (user: IItemUser) => {
 .col-6 {
   width: 48% !important;
 }
-
+.search-item{
+  min-height: 651px;
+}
 ::v-deep {
   .q-focus-helper {
     background: red !important;
   }
+  .q-pa-lg {
+    padding: 0px;
+    .q-pagination {
+      gap: 10px;
+      padding: 4px;
+      box-shadow: 0px 4px 4px rgb(0 0 0 / 10%);
 
-  .q-pagination {
-    gap: 10px;
-    padding: 4px;
-    box-shadow: 0px 4px 4px rgb(0 0 0 / 10%);
-
-    .q-btn {
-      &:hover {
-        background-color: rgb(116, 255, 146);
+      .q-btn {
+        &:hover {
+          background-color: rgb(51, 255, 0);
+        }
       }
     }
   }
