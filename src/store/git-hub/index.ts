@@ -1,13 +1,11 @@
-import userAPI from "@/api/user";
 import { defineStore } from "pinia";
 import { IItemUser } from "@/api/user";
-import { UserDetail } from "@/typescript/User";
-const { fetchUserDetail } = userAPI();
+import { IUserDetail } from "@/typescript/User";
 const useStoreGitHub = defineStore("root", {
   state: () => ({
     searchValue: "",
     favoriteList: <IItemUser[]>[],
-    userDetail: <UserDetail>{},
+    userDetail: <IUserDetail>{},
   }),
   getters: {
     getFavoriteList: (state) => state.favoriteList,
@@ -21,13 +19,8 @@ const useStoreGitHub = defineStore("root", {
     setFavoriteList(favoriteList: IItemUser[]) {
       this.favoriteList = favoriteList;
     },
-    async fetchUserDetail(userName: string) {
-      try {
-        const data = await fetchUserDetail(userName);
-        this.userDetail = data
-      } catch (err) {
-        console.log("Can not fetch user detail", err);
-      }
+    setUserDetail(userDetail: IUserDetail) {
+        this.userDetail = userDetail
     },
   },
 });

@@ -7,7 +7,7 @@
       <div
         v-for="(user, index) in favoriteList"
         :key="index"
-        class="col-6 mb-2"
+        class="col-6"
         @click="goToDetailPage(user.login)"
       >
         <user-card
@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import useStoreGitHub from "@/store/git-hub";
-import UserCard from "@/components/git-hub/common/UserCard.vue";
+import UserCard from "@/components/git-hub/card/UserCard.vue";
 import { ref, onMounted } from "vue";
 import { IItemUser } from "@/api/user";
 const storeGitHub = useStoreGitHub();
@@ -49,9 +49,5 @@ const onUnSetFavorite = (user: IItemUser) => {
 <style scoped lang="scss">
 .font-jost {
   font-family: Jost;
-}
-
-.col-6 {
-  width: 48% !important;
 }
 </style>

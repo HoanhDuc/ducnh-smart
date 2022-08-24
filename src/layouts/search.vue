@@ -1,6 +1,6 @@
 <template>
   <div class="default-layout">
-    <div class="child lg:w-2/3  relative-position overflow-hidden">
+    <div class="child lg:w-3/5  relative-position overflow-hidden">
       <router-view class="py-6 px-4" />
       <div v-if="!route.path.includes('/detail')" class="footer row p-2.5">
         <router-link class="footer-item col-6 text-base" :style="`color:${colorTab.searchTab}`" to="/search">
@@ -37,6 +37,7 @@ const colorTab = computed(() => {
 <style lang="scss" scoped>
 .default-layout {
   height: 100vh;
+  background: rgb(158, 158, 158);
   .child {
     background: #fff;
     margin: auto;

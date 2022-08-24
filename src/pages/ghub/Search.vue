@@ -14,9 +14,12 @@
     />
     <div class="search-item">
       <p class="text-sm font-jost">{{ totalSearch }} GitHub users found</p>
-      <GitHubNotify v-if="!searchValue && !isLoading" class="mx-auto mt-32" />
+      <GitHubNotify
+        v-if="!searchValue && !isLoading && !route.query.name"
+        class="mx-auto mt-32"
+      />
       <div class="row justify-between min-w-">
-        <div v-for="(user, index) in listUsers" :key="index" class="col-6 mb-2">
+        <div v-for="(user, index) in listUsers" :key="index" class="col-6">
           <user-card
             :user="user"
             @set-favorite="onSetFavorite"
@@ -34,6 +37,7 @@
           v-model="currentPage"
           color="black"
           direction-links
+          push
           :max="totalPage > 100 ? 80 : totalPage"
           :max-pages="5"
           :boundary-numbers="false"
@@ -45,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import UserCard from "@/components/git-hub/common/UserCard.vue";
+import UserCard from "@/components/git-hub/card/UserCard.vue";
 import Loading from "@/components/common/Loading.vue";
 import useFetchList from "@/api/user";
 import { useDebounceFn } from "@vueuse/core";
@@ -54,6 +58,7 @@ import { IItemUser } from "@api/user";
 import { useRoute, useRouter } from "vue-router";
 import useStoreGitHub from "@/store/git-hub";
 import GitHubNotify from "../../components/common/GitHubNotify.vue";
+import { IUserDetail } from "@/typescript/User";
 
 const storeGHub = useStoreGitHub();
 const isLoading = ref(false);
@@ -73,12 +78,17 @@ onMounted(() => {
     favoriteList.value = JSON.parse(favoriteItems);
     storeGHub.setFavoriteList(favoriteList.value);
   }
-  if (searchValue.value) {
+  if (searchValue.value || route.query.name) {
+    if (route.query.name) {
+      searchValue.value = route.query.name.toString();
+      storeGHub.setSearchValue(searchValue.value);
+    }
     fetchList(storeGHub.getSearchValue, 1);
     updatePage();
   }
 });
 watch(searchValue, (value: string) => {
+  currentPage.value = 1
   if (!value) {
     listUsers.value = [];
     totalSearch.value = 0;
@@ -131,20 +141,17 @@ const onUnSetFavorite = (user: IItemUser) => {
   window.localStorage.setItem("favorite", JSON.stringify(favoriteList.value));
   storeGHub.setFavoriteList(favoriteList.value);
 };
-const goToDetail = (user: IItemUser) => {
-  router.push(`/search/detail?name=${user.login}`);
+const goToDetail = (userDetail: IUserDetail) => {
+  storeGHub.setUserDetail(userDetail);
+  router.push(`/search/detail?name=${userDetail.login}`);
 };
 </script>
 <style scoped lang="scss">
 .font-jost {
   font-family: Jost;
 }
-
-.col-6 {
-  width: 48% !important;
-}
-.search-item{
-  min-height: 651px;
+.search-item {
+  min-height: 615px;
 }
 ::v-deep {
   .q-focus-helper {
@@ -155,11 +162,10 @@ const goToDetail = (user: IItemUser) => {
     .q-pagination {
       gap: 10px;
       padding: 4px;
-      box-shadow: 0px 4px 4px rgb(0 0 0 / 10%);
-
       .q-btn {
         &:hover {
-          background-color: rgb(51, 255, 0);
+          background-color: rgb(119, 119, 119);
+          color: #fff !important;
         }
       }
     }

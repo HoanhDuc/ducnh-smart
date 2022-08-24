@@ -1,5 +1,5 @@
 import { $axios, $axiosInstance } from "@/plugins/axios";
-import { UserDetail } from "@/typescript/User";
+import { IUserDetail } from "@/typescript/User";
 
 interface payloadGetList {
   q: string;
@@ -47,15 +47,16 @@ const user = () => ({
   async fetchListUserFollows(url: string) {
     try {
       const response = await $axiosInstance.get(url);
-      return response.data.length;
+      return response.data;
     } catch (error) {
-      return 0;
+      return [];
     }
   },
   async fetchUserDetail(username: string) {
     const { data } = await $axiosInstance.get(`/users/${username}`);
     return {
-      name: data.login,
+      name: data.name,
+      login: data.login,
       avatar_url: data.avatar_url,
       followers_url: data.followers_url,
       following_url: data.following_url,
