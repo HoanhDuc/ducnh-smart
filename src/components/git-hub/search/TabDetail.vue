@@ -14,7 +14,7 @@
     </q-tabs>
 
     <q-tab-panels v-model="tab" animated class="text-left">
-      <q-tab-panel name="repo" class="row justify-between py-0 px-7">
+      <q-tab-panel name="repo" class="row justify-between px-0">
         <div
           v-for="(repo, index) in repositories"
           :key="index"
@@ -28,13 +28,13 @@
         </div>
       </q-tab-panel>
 
-      <q-tab-panel name="follower" class="row justify-between py-0 px-7">
+      <q-tab-panel name="follower" class="row justify-between px-0">
         <div v-for="(user, index) in followers" :key="index" class="col-6 mb-2">
           <UserCard :user="user" isNotSearch />
         </div>
       </q-tab-panel>
 
-      <q-tab-panel name="following" class="row justify-between py-0 px-7">
+      <q-tab-panel name="following" class="row justify-between px-0">
         <div v-for="(user, index) in followings" :key="index" class="col-6 mb-2">
           <UserCard :user="user" isNotSearch />
         </div>

@@ -46,8 +46,6 @@ onMounted(async () => {
     const detail = await fetchUserDetail(encode);
     useStoreGHub.setUserDetail(detail);
   }
-  console.log(userDetail);
-  
   repos.value = await fetchListUserFollows(userDetail.value.repos_url);
   followers.value = await fetchListUserFollows(userDetail.value.followers_url);
   followings.value = await fetchListUserFollows(userDetail.value.following_url.replace('{/other_user}', ''));

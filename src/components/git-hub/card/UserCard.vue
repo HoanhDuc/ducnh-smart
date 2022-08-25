@@ -116,8 +116,7 @@ export default defineComponent({
   border-radius: 10px;
 
   &:hover {
-    transform: scale(1.1);
-    transition: ease-in-out 0.2s;
+   background-color: rgb(238, 238, 238);
   }
 
   .image {

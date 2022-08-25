@@ -12,13 +12,13 @@
       @keyup="getListUser"
       class="mb-2"
     />
-    <div class="search-item">
+    <div class="search-item mb-3">
       <p class="text-sm font-jost">{{ totalSearch }} GitHub users found</p>
       <GitHubNotify
         v-if="!searchValue && !isLoading && !route.query.name"
         class="mx-auto mt-32"
       />
-      <div class="row justify-between px-4">
+      <div class="row justify-between">
         <div v-for="(user, index) in listUsers" :key="index" class="col-6 mb-2">
           <user-card
             :user="user"
@@ -164,7 +164,8 @@ const goToDetail = (userDetail: IUserDetail) => {
       padding: 4px;
       .q-btn {
         &:hover {
-          background-color: rgb(119, 119, 119);
+          border-radius: 8px;
+          background-color: rgb(194, 194, 194);
           color: #fff !important;
         }
       }

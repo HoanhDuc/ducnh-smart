@@ -11,7 +11,7 @@ export const routes = [
         component: () => import("@/layouts/github.vue"),
         children: [
           {
-            name: "Seach",
+            name: "SeachGitHub",
             path: "/github/search",
             component: () => import("@/pages/git-hub/SearchPage.vue"),
           },
@@ -21,10 +21,22 @@ export const routes = [
             component: () => import("@/pages/git-hub/FavoritePage.vue"),
           },
           {
-            name: "Detail",
+            name: "DetailGitHub",
             path: "/github/detail",
             component: () =>
               import("@/pages/git-hub/user-detail/UserDetailPage.vue"),
+          },
+        ],
+      },
+      {
+        name: "Youtube",
+        path: "/youtube",
+        component: () => import("@/pages/youtube/index.vue"),
+        children: [
+          {
+            name: "SeachYoutube",
+            path: "/youtube/search",
+            component: () => import("@/pages/youtube/index.vue"),
           },
         ],
       },

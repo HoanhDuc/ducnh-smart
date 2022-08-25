@@ -21,7 +21,7 @@
       "@modules/*": ["modules/*"],
       "@composables/*": ["composables/*"],
       "@store/*": ["store/*"],
-      "@utils/*": ["utils/*"],
+      "@utils/*": ["src/utils/*"],
       "@plugins/*": ["plugins/*"]
     }
   },
