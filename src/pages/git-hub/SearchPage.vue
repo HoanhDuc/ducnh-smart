@@ -18,8 +18,8 @@
         v-if="!searchValue && !isLoading && !route.query.name"
         class="mx-auto mt-32"
       />
-      <div class="row justify-between min-w-">
-        <div v-for="(user, index) in listUsers" :key="index" class="col-6">
+      <div class="row justify-between px-4">
+        <div v-for="(user, index) in listUsers" :key="index" class="col-6 mb-2">
           <user-card
             :user="user"
             @set-favorite="onSetFavorite"
@@ -57,7 +57,7 @@ import { ref, onMounted, watch } from "vue";
 import { IItemUser } from "@api/user";
 import { useRoute, useRouter } from "vue-router";
 import useStoreGitHub from "@/store/git-hub";
-import GitHubNotify from "../../components/common/GitHubNotify.vue";
+import GitHubNotify from "@/components/common/GitHubNotify.vue";
 import { IUserDetail } from "@/typescript/User";
 
 const storeGHub = useStoreGitHub();
@@ -143,7 +143,7 @@ const onUnSetFavorite = (user: IItemUser) => {
 };
 const goToDetail = (userDetail: IUserDetail) => {
   storeGHub.setUserDetail(userDetail);
-  router.push(`/search/detail?name=${userDetail.login}`);
+  router.push(`/github/detail?name=${userDetail.login}`);
 };
 </script>
 <style scoped lang="scss">

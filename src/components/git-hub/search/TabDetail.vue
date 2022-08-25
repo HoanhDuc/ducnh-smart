@@ -6,7 +6,7 @@
       align="justify"
       active-color="blue"
       style="color: rgba(0, 0, 0, 0.54)"
-      class="mb-2"
+      class="mb-4"
     >
       <q-tab name="repo" label="Repositories" class="col-3" />
       <q-tab name="follower" label="Followers" class="col-3" />
@@ -14,28 +14,28 @@
     </q-tabs>
 
     <q-tab-panels v-model="tab" animated class="text-left">
-      <q-tab-panel name="repo" class="row justify-between p-0">
+      <q-tab-panel name="repo" class="row justify-between py-0 px-7">
         <div
           v-for="(repo, index) in repositories"
           :key="index"
-          class="repo-block col-6 text-xs p-2 flex flex-col whitespace-nowrap overflow-hidden"
+          class="repo-block col-6 text-xs p-2 flex flex-col whitespace-nowrap overflow-hidden mb-2"
         >
           <span class="font-bold text-base mb-2">
-           {{ repo.name }}
+            {{ repo.name }}
           </span>
           <span> Forks:{{ repo.forks }}</span>
           <span> Stars:{{ repo.stargazers_count }}</span>
         </div>
       </q-tab-panel>
 
-      <q-tab-panel name="follower" class="row justify-between p-0">
-        <div v-for="(user, index) in followers" :key="index" class="col-6">
+      <q-tab-panel name="follower" class="row justify-between py-0 px-7">
+        <div v-for="(user, index) in followers" :key="index" class="col-6 mb-2">
           <UserCard :user="user" isNotSearch />
         </div>
       </q-tab-panel>
 
-      <q-tab-panel name="following" class="row justify-between p-0">
-        <div v-for="(user, index) in followings" :key="index" class="col-6">
+      <q-tab-panel name="following" class="row justify-between py-0 px-7">
+        <div v-for="(user, index) in followings" :key="index" class="col-6 mb-2">
           <UserCard :user="user" isNotSearch />
         </div>
       </q-tab-panel>

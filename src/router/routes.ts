@@ -2,24 +2,31 @@ export const routes = [
   {
     name: "Home",
     path: "/",
-    component: () => import("@/layouts/search.vue"),
+    component: () => import("@/layouts/default.vue"),
     redirect: { path: "/" },
     children: [
       {
-        name: "Seach",
-        path: "/search",
-        query: { name: '' },
-        component: () => import("@/pages/ghub/Search.vue"),
-      },
-      {
-        name: "Favorite",
-        path: "/favorite",
-        component: () => import("@/pages/ghub/Favorite.vue"),
-      },
-      {
-        name: "Detail",
-        path: "/search/detail",
-        component: () => import("@/pages/ghub/detail-page/index.vue"),
+        name: "GitHub",
+        path: "/github",
+        component: () => import("@/layouts/github.vue"),
+        children: [
+          {
+            name: "Seach",
+            path: "/github/search",
+            component: () => import("@/pages/git-hub/SearchPage.vue"),
+          },
+          {
+            name: "Favorite",
+            path: "/github/favorite",
+            component: () => import("@/pages/git-hub/FavoritePage.vue"),
+          },
+          {
+            name: "Detail",
+            path: "/github/detail",
+            component: () =>
+              import("@/pages/git-hub/user-detail/UserDetailPage.vue"),
+          },
+        ],
       },
     ],
   },
