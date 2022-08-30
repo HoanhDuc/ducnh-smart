@@ -1,12 +1,15 @@
 <template>
-  <div class="iframe-block rounded-lg shadow-lg overflow-hidden bg-white">
-    <YouTube
+  <div
+    class="iframe-block rounded-lg shadow-lg overflow-hidden bg-white cursor-pointer"
+  >
+    <!-- <YouTube
       :src="`https://www.youtube.com/watch?v=${video.id}`"
       ref="youtube"
       width="350px"
       height="200px"
       class="min-h-[200px]"
-    />
+    /> -->
+    <img :src="video.thumbnail" alt="" class="min-h-[200px]" />
     <div class="row p-2 min-h-[100px]">
       <div class="col-2">
         <img
@@ -20,9 +23,9 @@
           {{ video.videoTitle }}
         </span>
       </div>
-        <span class="cursor-pointer hover:text-primary text-center w-full">
-          {{ video.channelTitle }}
-        </span>
+      <span class="hover:text-primary text-center w-full">
+        {{ video.channelTitle }}
+      </span>
     </div>
   </div>
 </template>
@@ -34,6 +37,7 @@ interface IProps {
     id: string;
     channelTitle: string;
     videoTitle: string;
+    thumbnail: string;
   };
 }
 const props = defineProps<IProps>();

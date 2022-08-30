@@ -105,6 +105,7 @@ const getVideosList = async (payload) => {
         id: item.id.videoId,
         channelTitle: item.snippet.channelTitle,
         videoTitle: item.snippet.title,
+        thumbnail : item.snippet.thumbnails.medium.url
       }));
       loading.value = false;
     }
