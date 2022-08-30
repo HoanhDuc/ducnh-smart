@@ -37,7 +37,7 @@ const searchTerm = ref("");
 
 const defaultValue = {
   part: ["id", "snippet"],
-  maxResults: 20,
+  maxResults: 8,
   type: "video",
 };
 
@@ -53,11 +53,12 @@ onMounted(() => {
     if (!authInstance.isSignedIn.get()) {
       setAuth();
     } else {
-      const userName = await authInstance.currentUser
-        .get()
-        .getBasicProfile()
-        .getName();
       loadClient();
+      window.onscroll = (ev) => {
+        if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+          loadMoreVideo();
+        }
+      };
     }
   });
 });
@@ -91,7 +92,10 @@ const loadClient = async () => {
   deleteKeyNull(defaultValue);
   getVideosList(defaultValue);
 };
-
+const loadMoreVideo = () => {
+  defaultValue.maxResults += 8;
+  getVideosList(defaultValue);
+};
 const getVideosList = async (payload) => {
   try {
     loading.value = true;
@@ -111,6 +115,7 @@ const getVideosList = async (payload) => {
 };
 
 const onSearch = () => {
+  defaultValue.maxResults = 8
   const value = {
     ...defaultValue,
     q: searchTerm.value,
@@ -118,8 +123,6 @@ const onSearch = () => {
   deleteKeyNull(value);
   getVideosList(value);
 };
-
-
 </script>
 
 <style lang="scss">
