@@ -5,22 +5,28 @@
       <div class="flex items-center justify-between mb-2">
         <p class="text-3xl font-bold font-jost">Search</p>
       </div>
-      <q-input outlined v-model="searchTerm" placeholder="Enter Youtube username, i.e." type="search" class="mb-2"
-        @keyup.enter="onSearch" />
+      <q-input
+        outlined
+        v-model="searchTerm"
+        placeholder="Enter Youtube username, i.e."
+        type="search"
+        class="mb-2"
+        @keyup.enter="onSearch"
+      />
     </div>
-    <div class="row gap-8 justify-between" v-if="videos.length">
-      <div v-for="video in videos" :key="video.id" class="col-2 rounded-lg overflow-hidden">
-        <IFrameLazyLoad :id="video.id.videoId" v-if="video.id.videoId" />
+    <div class="row gap-5 justify-between" v-if="videos.length">
+      <div v-for="video in videos" :key="video.id" class="col-3">
+        <IFrameYoutubeCard :video="video" v-if="video.id" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import IFrameLazyLoad from "@/components/youtube/IFrameLazyLoad.vue";
+import IFrameYoutubeCard from "@/components/youtube/IFrameYoutubeCard.vue";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import Loading from '@/components/common/Loading.vue'
+import Loading from "@/components/common/Loading.vue";
 
 const videos = ref([]);
 const errorsList = ref([]);
@@ -30,42 +36,59 @@ const route = useRoute();
 const searchTerm = ref("");
 
 const defaultValue = {
-  part: ["id"],
+  part: ["id", "snippet"],
   maxResults: 20,
-  type: 'video'
+  type: "video",
 };
 
-const authenticate = () => {
+onMounted(() => {
+  gapi.load("client:auth2", async function () {
+    gapi.auth2.init({
+      client_id:
+        "1047672564743-bl5o8ongiitucqkkfmh8rt1ij79eun3i.apps.googleusercontent.com",
+      scope: "email profile openid",
+      plugin_name: "App Name that you used in google developer console API",
+    });
+    const authInstance = await gapi.auth2.getAuthInstance();
+    if (!authInstance.isSignedIn.get()) {
+      setAuth();
+    } else {
+      const userName = await authInstance.currentUser
+        .get()
+        .getBasicProfile()
+        .getName();
+      loadClient();
+    }
+  });
+});
+
+const deleteKeyNull = (obj) => {
+  Object.keys(obj).forEach((key) => {
+    if (!obj[key]) {
+      delete obj[key];
+    }
+  });
+};
+
+const setAuth = () => {
   return gapi.auth2
     .getAuthInstance()
     .signIn({
       scope: "https://www.googleapis.com/auth/youtube.readonly",
     })
-    .then(
-      function (e) {
-        loadClient();
-        const userName = e.getBasicProfile().getName();
-        // saveUser(userName);
-        console.log("Sign-in successful");
-      },
-      function (err) {
-        console.error("Error signing in", err);
-      }
-    );
+    .then((e) => {
+      loadClient();
+    });
 };
 
 const loadClient = async () => {
   loading.value = true;
-  await gapi.client.setApiKey("AIzaSyApgTHh4YvaItbXw42i_ggLM1CGpHgB0dQ");
+  await gapi.client.setApiKey("AIzaSyBTUk0JqMMnsEbd5_4xnWvjnJBGEgV_fng");
   await gapi.client.load(
     "https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"
   );
 
-  Object.keys(defaultValue).forEach((key) => {
-    if (!defaultValue[key]) {
-      delete defaultValue[key];
-    }
-  });
+  deleteKeyNull(defaultValue);
   getVideosList(defaultValue);
 };
 
@@ -73,29 +96,18 @@ const getVideosList = async (payload) => {
   try {
     loading.value = true;
     const data = await gapi.client.youtube.search.list(payload);
-
     if (!data.result.error) {
-      videos.value = data.result.items;
+      videos.value = data.result.items.map((item) => ({
+        id: item.id.videoId,
+        channelTitle: item.snippet.channelTitle,
+        videoTitle: item.snippet.title,
+      }));
       loading.value = false;
-      return;
     }
-
-    loading.value = false;
-    errorsList.value = data.result.error.errors;
   } catch (error) {
     loading.value = false;
     errorsList.value = error.result.error.errors;
   }
-};
-
-const submit = (value) => {
-  Object.keys(value).forEach((key) => {
-    if (!value[key]) {
-      delete value[key];
-    }
-  });
-
-  getVideosList(value);
 };
 
 const onSearch = () => {
@@ -103,36 +115,15 @@ const onSearch = () => {
     ...defaultValue,
     q: searchTerm.value,
   };
-
-  submit(value);
+  deleteKeyNull(value);
+  getVideosList(value);
 };
 
-onMounted(async () => {
-  gapi.load("client:auth2", async function () {
-    gapi.auth2.init({
-      client_id:
-        "700083678766-7v0ddu3ik1supaucr6jmt5oir9gf0q6n.apps.googleusercontent.com",
-      scope: "email profile openid",
-      plugin_name: "App Name that you used in google developer console API",
-    });
 
-    loading.value = true;
-    const authInstance = await gapi.auth2.getAuthInstance();
-
-    if (!authInstance.isSignedIn.get()) {
-      loading.value = false;
-      authenticate();
-    } else {
-      const userName = await authInstance.currentUser
-        .get()
-        .getBasicProfile()
-        .getName();
-      //   saveUser(userName);
-      loadClient();
-    }
-  });
-});
 </script>
 
 <style lang="scss">
+.col-3 {
+  max-width: 23% !important;
+}
 </style>

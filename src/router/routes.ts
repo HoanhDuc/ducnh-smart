@@ -31,7 +31,7 @@ export const routes = [
       {
         name: "Youtube",
         path: "/youtube",
-        component: () => import("@/layouts/github.vue"),
+        component: () => import("@/layouts/default.vue"),
         children: [
           {
             name: "SeachYoutube",

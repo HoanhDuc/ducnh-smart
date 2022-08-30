@@ -1,6 +1,6 @@
 <template>
   <div class="default-layout">
-    <div class="child lg:w-3/5  relative-position overflow-hidden">
+    <div class="child relative-position overflow-hidden">
       <router-view class="py-6 px-4" />
     </div>
   </div>
@@ -13,9 +13,9 @@ const route = useRoute();
 <style lang="scss" scoped>
 .default-layout {
   .child {
-    background: #fff;
+    background-image: linear-gradient(to right top, #ff7373, #ff4183, #ee00a4, #c000d0, #402eff);
     margin: auto;
-    height: 100%;
+    min-height: 100vh;
   }
 }
 
