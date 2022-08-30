@@ -3,7 +3,7 @@ export const routes = [
     name: "Home",
     path: "/",
     component: () => import("@/layouts/default.vue"),
-    redirect: { path: "/" },
+    redirect: { path: "/github" },
     children: [
       {
         name: "GitHub",
@@ -31,12 +31,17 @@ export const routes = [
       {
         name: "Youtube",
         path: "/youtube",
-        component: () => import("@/pages/youtube/index.vue"),
+        component: () => import("@/layouts/github.vue"),
         children: [
           {
             name: "SeachYoutube",
             path: "/youtube/search",
-            component: () => import("@/pages/youtube/index.vue"),
+            component: () => import("@/pages/youtube/SearchYoutube.vue"),
+          },
+          {
+            name: "SeachSubcription",
+            path: "/youtube/subcription",
+            component: () => import("@/pages/youtube/SubcriptionYoutube.vue"),
           },
         ],
       },

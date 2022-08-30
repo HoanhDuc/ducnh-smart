@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh Lpr lff" style="height: 200px">
-    <q-header elevated class="bg-error">
+    <q-header elevated class="bg-secondary-dark">
       <q-toolbar>
         <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
         <q-toolbar-title>DucNH</q-toolbar-title>
@@ -50,13 +50,16 @@
 
 <script setup lang="ts">
 import { menuList } from "@/utils/menuSideBar";
-import { ref, computed, watch } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 const route = useRoute()
 const drawer = ref(true)
 const tabSelected = ref('github')
 const subTabSelected = ref('')
-watch((route), () => {
+onMounted(() => {
+  init()
+})
+const init = () => {
   if (route.fullPath.includes('/github')) {
     tabSelected.value = 'github'
     return
@@ -65,7 +68,11 @@ watch((route), () => {
     tabSelected.value = 'youtube'
     return
   }
+}
+watch((route), (value) => {
+  init()
 })
+
 </script>
 
 <style scoped lang="scss">

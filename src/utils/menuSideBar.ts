@@ -29,7 +29,7 @@ export const menuList = [
       {
         icon: "thumb_up",
         label: "Subcribes",
-        to: "/github/subcribe",
+        to: "/youtube/subcription",
       },
     ],
   },

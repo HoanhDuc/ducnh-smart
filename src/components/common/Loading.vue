@@ -2,7 +2,7 @@
   <div class="overlay">
     <div class="overlay__inner">
       <div class="overlay__content flex flex-col justify-center items-center">
-        <span class="spinner mb-3"></span><span>Loading...</span>
+        <span class="spinner mb-3"></span><span class="text-white">Loading...</span>
       </div>
     </div>
   </div>
@@ -14,10 +14,10 @@
   top: 0;
   width: 100%;
   height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
   position: fixed;
   z-index: 10000000;
 }
-
 .overlay__inner {
   left: 0;
   top: 0;
