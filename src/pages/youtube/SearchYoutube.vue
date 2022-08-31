@@ -16,14 +16,14 @@
     </div>
     <div class="row gap-5 justify-between" v-if="videos.length">
       <div v-for="video in videos" :key="video.id" class="col-3">
-        <IFrameYoutubeCard :video="video" v-if="video.id" />
+        <YoutubeCard :video="video" v-if="video.id" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import IFrameYoutubeCard from "@/components/youtube/IFrameYoutubeCard.vue";
+import YoutubeCard from '@/components/youtube/card/YoutubeCard.vue'
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import Loading from "@/components/common/Loading.vue";
@@ -45,7 +45,7 @@ onMounted(() => {
   gapi.load("client:auth2", async function () {
     gapi.auth2.init({
       client_id:
-        "1047672564743-bl5o8ongiitucqkkfmh8rt1ij79eun3i.apps.googleusercontent.com",
+        "870086184702-qm8k72suv8cvp8cstre2ae5cpscuuk3d.apps.googleusercontent.com",
       scope: "email profile openid",
       plugin_name: "App Name that you used in google developer console API",
     });
@@ -84,7 +84,7 @@ const setAuth = () => {
 
 const loadClient = async () => {
   loading.value = true;
-  await gapi.client.setApiKey("AIzaSyBTUk0JqMMnsEbd5_4xnWvjnJBGEgV_fng");
+  await gapi.client.setApiKey("AIzaSyAtGK3TwFP06WOsDDkxcLF6mStFDxgoHZU");
   await gapi.client.load(
     "https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"
   );
