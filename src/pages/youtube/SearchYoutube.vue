@@ -5,14 +5,8 @@
       <div class="flex items-center justify-between mb-2">
         <p class="text-3xl font-bold font-jost">Search</p>
       </div>
-      <q-input
-        outlined
-        v-model="searchTerm"
-        placeholder="Enter Youtube username, i.e."
-        type="search"
-        class="mb-2"
-        @keyup.enter="onSearch"
-      />
+      <q-input outlined v-model="searchTerm" placeholder="Enter Youtube username, i.e." type="search" class="mb-2"
+        @keyup.enter="onSearch" />
     </div>
     <div class="row gap-5 justify-between" v-if="videos.length">
       <div v-for="video in videos" :key="video.id" class="col-3">
@@ -24,7 +18,7 @@
 
 <script setup>
 import YoutubeCard from '@/components/youtube/card/YoutubeCard.vue'
-import { onMounted, ref } from "vue";
+import { onMounted, ref,watch } from "vue";
 import { useRoute } from "vue-router";
 import Loading from "@/components/common/Loading.vue";
 
@@ -56,12 +50,17 @@ onMounted(() => {
       loadClient();
       window.onscroll = (ev) => {
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-          loadMoreVideo();
+          defaultValue.maxResults += 8;
+          onSearch();
         }
       };
     }
   });
 });
+
+watch((searchTerm), () => {
+  defaultValue.maxResults = 8
+})
 
 const deleteKeyNull = (obj) => {
   Object.keys(obj).forEach((key) => {
@@ -92,10 +91,7 @@ const loadClient = async () => {
   deleteKeyNull(defaultValue);
   getVideosList(defaultValue);
 };
-const loadMoreVideo = () => {
-  defaultValue.maxResults += 8;
-  getVideosList(defaultValue);
-};
+
 const getVideosList = async (payload) => {
   try {
     loading.value = true;
@@ -105,7 +101,7 @@ const getVideosList = async (payload) => {
         id: item.id.videoId,
         channelTitle: item.snippet.channelTitle,
         videoTitle: item.snippet.title,
-        thumbnail : item.snippet.thumbnails.medium.url
+        thumbnail: item.snippet.thumbnails.medium.url
       }));
       loading.value = false;
     }
@@ -116,7 +112,6 @@ const getVideosList = async (payload) => {
 };
 
 const onSearch = () => {
-  defaultValue.maxResults = 8
   const value = {
     ...defaultValue,
     q: searchTerm.value,
