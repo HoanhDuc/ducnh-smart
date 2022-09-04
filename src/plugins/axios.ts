@@ -3,7 +3,7 @@ import axios from "axios";
 const axiosInstance = axios.create({
   baseURL: "https://api.github.com",
   headers: {
-    Authorization: `token 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`,
+    Authorization: `token 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`,
     accept: "application/vnd.github+json"
   },
 });
