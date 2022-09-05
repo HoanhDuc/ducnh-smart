@@ -41,15 +41,13 @@ const relatedVideos = ref<IRelatedVideo[]>([]);
 
 const defaultValue = {
   part: ["snippet"],
-  relatedToVideoId: route.query.v,
+  relatedToVideoId: videoID.value,
   type: ["video"],
   maxResults: 8,
 };
 onMounted(() => {
   videoID.value = route.query.v;
-  if (store.isLogedIn) {
-    getRelatedList(defaultValue);
-  }
+  getRelatedList(defaultValue);
 });
 
 const onReady = () => {
@@ -57,29 +55,26 @@ const onReady = () => {
 };
 
 watch(store, () => {
-  if (store.isLogedIn) {
-    getRelatedList(defaultValue);
-  }
+  getRelatedList(defaultValue);
 });
 watch(route, (value) => {
+  videoID.value = route.query.v;
   defaultValue.relatedToVideoId = value.query.v;
-  if (store.isLogedIn) {
-    getRelatedList(defaultValue);
-  }
+  getRelatedList(defaultValue);
 });
 
 const getRelatedList = async (payload: Object) => {
-    console.log(payload);
   try {
-    deleteKeyNull(payload);
-    const data = await gapi.client.youtube.search.list(payload);
-    if (!data.result.error) {
-      relatedVideos.value = data.result.items.map((item: any) => ({
-        id: item.id.videoId,
-        channelTitle: item.snippet.channelTitle,
-        videoTitle: item.snippet.title,
-        thumbnail: item.snippet.thumbnails.medium.url,
-      }));
+    if (store.isLogedIn && videoID.value) {
+      const data = await gapi.client.youtube.search.list(payload);
+      if (!data.result.error) {
+        relatedVideos.value = data.result.items.map((item: any) => ({
+          id: item.id.videoId,
+          channelTitle: item.snippet.channelTitle,
+          videoTitle: item.snippet.title,
+          thumbnail: item.snippet.thumbnails.medium.url,
+        }));
+      }
     }
   } catch (error) {
     console.log(error);
