@@ -1,4 +1,5 @@
 export interface IUserGoogle {
-  avatar: string,
-  name: string,
+  name: string;
+  email: string;
+  avatar: string;
 }
