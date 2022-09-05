@@ -1,36 +1,16 @@
 <template>
-  <div class="q-pa-md w-full px-0">
-    <q-expansion-item
-      class="shadow-1 overflow-hidden"
-      style="border-radius: 6px"
-      icon="favorite"
-      label="Subcriptions"
-      header-class="bg-green text-white"
-      expand-icon-class="text-white"
-    >
+  <div class="q-pa-md sm:w-full p-0 sm:px-0 absolute sm:static">
+    <q-expansion-item class="shadow-1 overflow-hidden" style="border-radius: 6px" icon="favorite" label="Subcriptions"
+      header-class="bg-green text-white" expand-icon-class="text-white">
       <div class="p-3 text-center bg-warning-light">
-        <div
-          class="py-2 flex items-center gap-1 cursor-pointer hover:text-primary"
-          v-for="(item, index) in chanelsSubList"
-          :key="index"
-        >
-          <img
-            :src="item.avatar"
-            :alt="item.name"
-            width="40"
-            class="rounded-full shadow-lg"
-          />
+        <div class="py-2 flex items-center gap-1 cursor-pointer hover:text-primary"
+          v-for="(item, index) in chanelsSubList" :key="index">
+          <img :src="item.avatar" :alt="item.name" width="40" class="rounded-full shadow-lg" />
           <span>
             {{ item.name }}
           </span>
         </div>
-        <q-btn
-          color="green"
-          push
-          @click="onLoadMore"
-          class="w-full"
-          :loading="loading"
-        >
+        <q-btn color="green" push @click="onLoadMore" class="w-full" :loading="loading">
           <div class="row items-center no-wrap text-center">More</div>
         </q-btn>
       </div>
@@ -51,16 +31,19 @@ const defaultValue = {
   mine: true,
 };
 
+onMounted(()=>{
+  getSubcriptionsList(defaultValue);
+})
+
 watch(store, () => {
-  if (store.isLogedIn) {
-    deleteKeyNull(defaultValue);
     getSubcriptionsList(defaultValue);
-  }
 });
 
 const getSubcriptionsList = async (payload) => {
   try {
+    if (store.isLogedIn) {
     loading.value = true;
+    deleteKeyNull(payload);
     const data = await gapi.client.youtube.subscriptions.list(payload);
     if (!data.result.error) {
       chanelsSubList.value = data.result.items.map((item) => ({
@@ -71,6 +54,7 @@ const getSubcriptionsList = async (payload) => {
       }));
       loading.value = false;
     }
+  }
   } catch (error) {
     loading.value = false;
   }

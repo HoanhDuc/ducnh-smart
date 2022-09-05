@@ -1,11 +1,11 @@
 <template>
   <Loading v-if="loading" />
-  <div class="row">
-    <div class="col-2">
+  <div class="flex p-3">
+    <div class="sm:w-1/5">
       <SideBar v-model:search-text="searchText"/>
     </div>
-    <div class="col-10">
-      <div class="row gap-5 justify-between p-0 sm:px-3" v-if="videos.length">
+    <div class="sm:w-4/5">
+      <div class="row gap-5 justify-between p-0 px-3" v-if="videos.length">
         <div v-for="video in videos" :key="video.id" class="col-3">
           <YoutubeCard :video="video" v-if="video.id" />
         </div>
@@ -31,7 +31,7 @@ const defaultValue = {
   part: ["id", "snippet"],
   maxResults: 12,
   type: "video",
-  q: "game",
+  q: "Bac si Hai",
 };
 
 onMounted(() => {

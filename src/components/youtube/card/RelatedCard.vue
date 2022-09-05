@@ -1,13 +1,13 @@
 <template>
-  <div @click="onRouteToViewPage" class="related-card flex cursor-pointer">
-    <img :src="video.thumbnail" width="200" class="rounded-lg mr-3 w-1/3" />
-    <div class="w-1/2 flex flex-col justify-between">
+  <div v-if="video.channelTitle" @click="onRouteToViewPage" class="related-card flex cursor-pointer">
+    <img :src="video.thumbnail" width="200" class="rounded-lg w-1/3" />
+    <div class="w-2/3 p-2 flex flex-col justify-between">
       <div class="text-white one-line">
         <span>
           {{ video.videoTitle || '' }}
         </span>
       </div>
-      <div class="flex items-center mb-3">
+      <div class="flex items-center">
         <img
           src="https://i.pinimg.com/originals/e8/c9/82/e8c9828387de2a83e5469a95bc6d8574.png"
           width="30"

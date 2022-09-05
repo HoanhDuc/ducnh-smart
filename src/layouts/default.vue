@@ -1,23 +1,23 @@
 <template>
   <div class="default-layout">
-    <div class="flex justify-between shadow-lg w-full p-3 fixed z-50 bg-black">
+    <div class="flex justify-between shadow-lg w-full p-3 fixed z-50 bg-black h-[65px]">
       <div class="flex gap-1 items-center justify-center cursor-pointer" @click="goHome">
         <img
-          src="https://denkavit.com/en/wp-content/uploads/sites/8/2021/11/YouTube-Icon.png"
+          src="https://content-calpoly-edu.s3.amazonaws.com/arce/1/widget_images/icon-youtube-green.png"
           alt=""
-          width="30"
+          width="40"
         />
-        <p class="text-2xl font-bold font-jost text-white">Poc</p>
+        <p class="text-2xl font-bold font-jost text-white">No Name</p>
       </div>
       <img
         :src="store.getUserGoogle.avatar"
         alt=""
         width="40"
-        class="rounded-full"
       />
     </div>
-    <div class="relative-position overflow-hidden p-5 pt-20">
-      <router-view class="py-6 px-4" />
+    <div class="relative-position overflow-hidden pt-[65px]">
+      <!-- <router-view class="sm:py-6 sm:px-4" /> -->
+      <router-view />
     </div>
   </div>
 </template>
@@ -32,7 +32,7 @@ onMounted(() => {
   gapi.load("client:auth2", async function () {
     gapi.auth2.init({
       client_id:
-        "465458925767-ea616s61ecuqn63fpt6o5srdb1g7vu39.apps.googleusercontent.com",
+        "930149329582-n3ttmobrbtfr3l85kc1tdcgnt1sl1e9r.apps.googleusercontent.com",
       scope: "email profile openid",
       plugin_name: "App Name that you used in google developer console API",
     });
@@ -55,7 +55,7 @@ const setAuth = () => {
     });
 };
 const loadClient = async () => {
-  await gapi.client.setApiKey("AIzaSyB5l87f_7IR1tYD4Zpnu_irUT8KAkj5UBY");
+  await gapi.client.setApiKey("AIzaSyDSoRBUuXltD2zSfR40mYNVkFGAuiWm2Qw");
   await gapi.client.load(
     "https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"
   );

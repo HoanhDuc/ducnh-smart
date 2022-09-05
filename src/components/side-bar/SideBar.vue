@@ -1,8 +1,8 @@
 <template>
-  <div class="">
-    <q-toolbar class="bg-green justify-between text-white rounded-sm">
-      <q-avatar class="gt-xs">
-        <img src="https://static.vecteezy.com/system/resources/previews/001/198/681/non_2x/video-camera-png.png" />
+  <div class="flex gap-3">
+    <q-toolbar class="bg-green justify-between gap-3 text-white rounded-sm w-auto sm:w-full">
+      <q-avatar class="gt-xs rounded-none">
+        <img src="https://cdn-icons-png.flaticon.com/512/4404/4404094.png" />
       </q-avatar>
       <q-input
         dark
@@ -23,7 +23,9 @@
         </template>
       </q-input>
     </q-toolbar>
+    <div class="relative sm:w-full">
     <SubcriptionCollapse />
+  </div>
   </div>
 </template>
 <script setup lang="ts">
