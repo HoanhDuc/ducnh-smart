@@ -3,7 +3,7 @@ import { IUserGoogle } from '@/typescript/User'
 const useStore = defineStore("root", {
     state: () => ({
         userGoogle: <IUserGoogle>{},
-        isLogedIn: false
+        isLogedIn: <Boolean>false
     }),
     getters: {
         getUserGoogle: (state) => state.userGoogle,
@@ -14,7 +14,7 @@ const useStore = defineStore("root", {
             this.userGoogle = user;
         },
         setLogedIn(isLogedIn : Boolean) {
-            this.isLogedIn = true;
+            this.isLogedIn = isLogedIn;
         },
     },
 });
