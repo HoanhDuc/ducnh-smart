@@ -32,7 +32,7 @@ onMounted(() => {
   gapi.load("client:auth2", async function () {
     gapi.auth2.init({
       client_id:
-        "930149329582-n3ttmobrbtfr3l85kc1tdcgnt1sl1e9r.apps.googleusercontent.com",
+        "5354673368-eal9lani9uo2uqihp0vv971o428mhg1f.apps.googleusercontent.com",
       scope: "email profile openid",
       plugin_name: "App Name that you used in google developer console API",
     });
@@ -55,7 +55,7 @@ const setAuth = () => {
     });
 };
 const loadClient = async () => {
-  await gapi.client.setApiKey("AIzaSyDSoRBUuXltD2zSfR40mYNVkFGAuiWm2Qw");
+  await gapi.client.setApiKey("AIzaSyDNfziLpL9tPvW8C-CAahC6ci73N8Hbv7o");
   await gapi.client.load(
     "https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"
   );
