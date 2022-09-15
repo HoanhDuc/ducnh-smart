@@ -1,19 +1,22 @@
 <template>
-  <div class="default-layout">
-    <div class="flex justify-between shadow-lg w-full p-3 fixed z-50 bg-black h-[65px]">
-      <div class="flex gap-1 items-center justify-center cursor-pointer" @click="goHome">
+  <div class="default-layout font-jost">
+    <div
+      class="flex justify-between shadow-lg w-full p-3 fixed z-50 bg-white h-[65px]"
+    >
+      <div
+        class="flex gap-1 items-center justify-center cursor-pointer"
+        @click="goHome"
+      >
         <img
           src="https://content-calpoly-edu.s3.amazonaws.com/arce/1/widget_images/icon-youtube-green.png"
           alt=""
           width="40"
         />
-        <p class="text-2xl font-bold font-jost text-white">No Name</p>
       </div>
-      <img
-        :src="store.getUserGoogle.avatar"
-        alt=""
-        width="40"
-      />
+      <div class="flex items-center">
+        <p class="font-bold">{{ store.getUserGoogle.name }}</p>
+        <img :src="store.getUserGoogle.avatar" alt="" width="40" />
+      </div>
     </div>
     <div class="relative-position overflow-hidden pt-[65px]">
       <!-- <router-view class="sm:py-6 sm:px-4" /> -->
@@ -78,7 +81,7 @@ const goHome = () => {
 <style lang="scss" scoped>
 .default-layout {
   // background-image: linear-gradient(to right top, #ff0000, #ff0081, #e15fdb, #8694ff, #00b2ff);
-  background-color: #2e2e2e;
+  // background-color: #2e2e2e;
   min-height: 100vh;
 }
 .font-fantasy {

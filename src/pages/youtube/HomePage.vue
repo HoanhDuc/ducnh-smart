@@ -1,12 +1,12 @@
 <template>
   <Loading v-if="loading" />
   <div class="flex p-3">
-    <div class="sm:w-1/5">
+    <div class="w-full md:w-1/5 mb-3">
       <SideBar v-model:search-text="searchText"/>
     </div>
-    <div class="sm:w-4/5">
-      <div class="row gap-5 justify-between p-0 px-3" v-if="videos.length">
-        <div v-for="video in videos" :key="video.id" class="col-3">
+    <div class="md:w-4/5">
+      <div class="row gap-5 justify-around p-0 px-3" v-if="videos.length">
+        <div v-for="video in videos" :key="video.id" class=" col-lg-2 col-md-3 col-sm-5">
           <YoutubeCard :video="video" v-if="video.id" />
         </div>
       </div>

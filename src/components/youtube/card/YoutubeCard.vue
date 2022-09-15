@@ -1,6 +1,6 @@
 <template>
   <div
-    class="iframe-block rounded-lg shadow-lg overflow-hidden bg-white cursor-pointer"
+    class="iframe-block rounded-lg shadow-lg overflow-hidden cursor-pointer"
     @click="onRouteToViewPage"
   >
     <img :src="video.thumbnail" alt="" class="min-h-[150px] w-full" />

@@ -1,8 +1,8 @@
 <template>
-  <div class="p-2 sm:p-5 flex gap-4">
-    <div class="w-full xl:w-2/3">
+  <div class="px-2 sm:p-5 row gap-5">
+    <div class="min-h-[250px] col-sm-8 col-xs-12">
       <div
-        class="q-video h-[250px] sm:h-[400px] xl:h-[600px] rounded-lg overflow-hidden"
+        class="q-video h-[250px] sm:h-[400px] xl:h-[600px] overflow-hidden xxs:fixed sm:relative left-0 w-full"
       >
         <iframe
           :src="`https://www.youtube.com/embed/${route.query.v}?autoplay=1`"
@@ -12,7 +12,7 @@
         ></iframe>
       </div>
     </div>
-    <div class="w-full xl:w-1/4">
+    <div class="col-sm-3 w-full">
       <div v-for="(video, index) in relatedVideos" :key="index" class="mb-4">
         <RelatedCard :video="video" />
       </div>
@@ -49,8 +49,6 @@ const defaultValue = {
 onMounted(() => {
   videoID.value = route.query.v;
   defaultValue.relatedToVideoId = route.query.v;
-  console.log(route.query.v);
-
   getRelatedList(defaultValue);
 });
 
@@ -80,7 +78,7 @@ const getRelatedList = async (payload: Object) => {
               id: item.id.videoId,
               channelTitle: item.snippet.channelTitle,
               videoTitle: item.snippet.title,
-              thumbnail: item.snippet.thumbnails.medium.url,
+              thumbnail: item.snippet.thumbnails.default.url,
             };
           }
           return {};
