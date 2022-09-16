@@ -4,12 +4,15 @@
       <div
         class="q-video h-[250px] sm:h-[400px] xl:h-[600px] overflow-hidden xxs:fixed sm:relative left-0 w-full"
       >
-        <iframe
+        <!-- <iframe
           :src="`https://www.youtube.com/embed/${route.query.v}?autoplay=1`"
           frameborder="0"
           style="width: 100%; height: 100%"
           allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-        ></iframe>
+        ></iframe> -->
+      <YouTube 
+        src="https://www.youtube.com/watch?v=jNQXAC9IVRw" 
+        ref="youtube" />
       </div>
     </div>
     <div class="col-sm-3 w-full">
@@ -25,6 +28,7 @@ import { onMounted, ref, watch } from "vue";
 import { deleteKeyNull } from "@/utils";
 import { useRoute } from "vue-router";
 import useStore from "@/store";
+import YouTube from 'vue3-youtube'
 import RelatedCard from "@/components/youtube/card/RelatedCard.vue";
 
 interface IRelatedVideo {
@@ -69,7 +73,6 @@ const getRelatedList = async (payload: Object) => {
   try {
     if (store.isLogedIn && videoID.value) {
       deleteKeyNull(payload);
-      console.log(payload);
       const data = await gapi.client.youtube.search.list(payload);
       if (!data.result.error) {
         relatedVideos.value = data.result.items.map((item: any) => {

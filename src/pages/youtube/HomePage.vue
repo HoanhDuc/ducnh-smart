@@ -29,9 +29,9 @@ const loading = ref(false);
 const searchText = ref("");
 const defaultValue = {
   part: ["id", "snippet"],
-  maxResults: 12,
+  maxResults: 10,
   type: "video",
-  q: "Bac si Hai",
+  q: "Music",
 };
 
 onMounted(() => {
@@ -41,7 +41,7 @@ onMounted(() => {
 });
 
 watch(searchText, () => {
-  defaultValue.maxResults = 12;
+  defaultValue.maxResults = 10;
   defaultValue.q = searchText.value;
   getVideosList(defaultValue);
 });
