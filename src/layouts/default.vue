@@ -1,31 +1,14 @@
 <template>
   <div class="default-layout font-jost">
-    <div
-      class="flex justify-between shadow-lg w-full p-3 fixed z-50 bg-white h-[65px]"
-    >
-      <div
-        class="flex gap-1 items-center justify-center cursor-pointer"
-        @click="goHome"
-      >
-        <img
-          src="https://content-calpoly-edu.s3.amazonaws.com/arce/1/widget_images/icon-youtube-green.png"
-          alt=""
-          width="40"
-        />
-      </div>
-      <div class="flex items-center">
-        <p class="font-bold">{{ store.getUserGoogle.name }}</p>
-        <img :src="store.getUserGoogle.avatar" alt="" width="40" />
-      </div>
-    </div>
+    <Header />
     <div class="relative-position overflow-hidden pt-[65px]">
-      <!-- <router-view class="sm:py-6 sm:px-4" /> -->
       <router-view />
     </div>
   </div>
 </template>
 
 <script setup>
+import Header from "@/components/header/Header.vue";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import useStore from "@/store";
@@ -73,9 +56,6 @@ const loadClient = async () => {
   };
   store.setUserGoogle(user);
   store.setLogedIn(true);
-};
-const goHome = () => {
-  router.push("/");
 };
 </script>
 <style lang="scss" scoped>

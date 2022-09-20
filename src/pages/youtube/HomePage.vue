@@ -1,17 +1,12 @@
 <template>
   <Loading v-if="loading" />
-  <div class="flex p-3">
-    <div class="w-full md:w-1/5 mb-3">
-      <SideBar v-model:search-text="searchText"/>
-    </div>
-    <div class="md:w-4/5">
+    <div class="md:w-4/5 mx-auto">
       <div class="row gap-5 justify-around p-0 px-3" v-if="videos.length">
         <div v-for="video in videos" :key="video.id" class=" col-lg-2 col-md-3 col-sm-5">
           <YoutubeCard :video="video" v-if="video.id" />
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script setup>
@@ -21,17 +16,18 @@ import { onMounted, ref, watch } from "vue";
 import { deleteKeyNull } from "@/utils";
 import Loading from "@/components/common/Loading.vue";
 import useStore from "@/store";
+import useStoreYoutube from "@/store/youtube/index";
 
 const store = useStore();
+const storeYoutube = useStoreYoutube();
 const videos = ref([]);
 const errorsList = ref([]);
 const loading = ref(false);
-const searchText = ref("");
 const defaultValue = {
   part: ["id", "snippet"],
   maxResults: 10,
   type: "video",
-  q: "Music",
+  q: "Fo4",
 };
 
 onMounted(() => {
@@ -40,9 +36,9 @@ onMounted(() => {
   }
 });
 
-watch(searchText, () => {
+watch(()=> storeYoutube.searchText, (value) => {
   defaultValue.maxResults = 10;
-  defaultValue.q = searchText.value;
+  defaultValue.q = value;
   getVideosList(defaultValue);
 });
 
