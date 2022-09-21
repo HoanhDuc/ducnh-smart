@@ -2,10 +2,10 @@
   <div
     v-if="video.channelTitle"
     @click="onRouteToViewPage"
-    class="related-card row cursor-pointer w-full shadow-lg"
+    class="related-card row cursor-pointer w-full shadow-lg rounded-lg overflow-hidden"
   >
-    <div class="col-3 flex items-center p-3">
-      <img :src="video.thumbnail" class="rounded-sm" />
+    <div class="col-3 flex items-center">
+      <img :src="video.thumbnail" />
     </div>
     <div class="p-2 col-9 flex flex-col">
       <div class="one-line">

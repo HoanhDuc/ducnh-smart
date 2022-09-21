@@ -1,14 +1,18 @@
 <template>
-  <div class="default-layout font-jost">
+  <div class="default-layout font-jost h-screen">
     <Header />
-    <div class="relative-position overflow-hidden pt-[65px]">
-      <router-view />
+    <div class="pt-[65px] row h-full">
+      <div class="p-3 col-md-10">
+        <router-view />
+      </div>
+      <SubcriptionCollapse class="col-2 fixed right-0 top-[65px] bottom-0 hidden sm:static" />
     </div>
   </div>
 </template>
 
 <script setup>
 import Header from "@/components/header/Header.vue";
+import SubcriptionCollapse from "@/components/youtube/subcription/SubcriptionCollapse.vue";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
 import useStore from "@/store";
