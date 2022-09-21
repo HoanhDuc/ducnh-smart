@@ -1,9 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts}"],
-  darkMode: 'class',
+  darkMode: "class",
   theme: {
     screens: {
+      xxs: "200px",
       xs: "480px",
       sm: "768px",
       md: "992px",
@@ -123,8 +124,8 @@ module.exports = {
     fontFamily: {
       "khmer-main": "Nato-Khmer-Regular, sans-serif",
       "khmer-bold": "Nato-Khmer-Bold, sans-serif",
-      "jost": 'Jost',
-      "arsenal": 'Arsenal'
+      jost: "Jost",
+      arsenal: "Arsenal",
     },
     extend: {},
   },

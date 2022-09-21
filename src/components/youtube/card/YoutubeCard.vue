@@ -1,18 +1,11 @@
 <template>
   <div
-    class="iframe-block rounded-lg shadow-lg overflow-hidden bg-white cursor-pointer"
+    class="iframe-block shadow-lg overflow-hidden cursor-pointer"
     @click="onRouteToViewPage"
   >
     <img :src="video.thumbnail" alt="" class="min-h-[150px] w-full" />
-    <div class="row p-2 min-h-[100px]">
-      <div class="col-2">
-        <img
-          class="rounded-full w-[40px]"
-          src="https://www.dronyx.com/wp-content/uploads/2015/06/dev-icon.png"
-          alt=""
-        />
-      </div>
-      <div class="col-10 flex flex-col overflow-hidden">
+    <div class="p-3 min-h-[100px]">
+      <div class="flex flex-col overflow-hidden">
         <span class="text-md title-video">
           {{ video.videoTitle }}
         </span>

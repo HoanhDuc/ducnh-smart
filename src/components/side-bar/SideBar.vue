@@ -1,6 +1,6 @@
 <template>
-  <div class="flex gap-3">
-    <q-toolbar class="bg-green justify-between gap-3 text-white rounded-sm w-auto sm:w-full">
+  <div class="flex gap-3 overflow-x-auto">
+    <q-toolbar class="bg-green justify-between gap-3 text-white rounded-sm w-auto">
       <q-avatar class="gt-xs rounded-none">
         <img src="https://cdn-icons-png.flaticon.com/512/4404/4404094.png" />
       </q-avatar>
@@ -23,7 +23,7 @@
         </template>
       </q-input>
     </q-toolbar>
-    <div class="relative sm:w-full">
+    <div class="relative">
     <SubcriptionCollapse />
   </div>
   </div>
